@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-image: url("https://www.shutterstock.com/image-photo/red-wood-table-chair-justice-600nw-1324425602.jpg");
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .upload-container {
+        background: grey;
+        padding: 30px;
+        margin-left: 10%;
+        border-radius: 10px;
+        margin-bottom: 20%;
+        margin-right:10%;
+        margin-top: 20%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 350px;
+        transition: transform 0.3s ease;
+        text-align: center;
+    }
+
+    .upload-container:hover {
+        transform: scale(1.05);
+    }
+
+    h2 {
+        color: black;
+        margin-bottom: 20px;
+        text-decoration: underline;
+    }
+
+    input[type="file"],
+    input[type="text"],
+    select {
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: #f1f1f1;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .back-link {
+        margin-top: 15px;
+        display: inline-block;
+        color: #007BFF;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="upload-container">
+    <h2>Upload a File</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="Document Title" required>
+        <br>
+        <select name="category" required>
+            <option value="contract">Contract</option>
+            <option value="evidence">Evidence</option>
+            <option value="motion">Motion</option>
+            <option value="other">Other</option>
+        </select>
+        <input type="file" name="file" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    
+</div>
+
+<!-- <div class="upload-container">
+    <h2>Upload Document</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="Document Title" required>
+        <select name="category" required>
+            <option value="contract">Contract</option>
+            <option value="evidence">Evidence</option>
+            <option value="motion">Motion</option>
+            <option value="other">Other</option>
+        </select>
+        <input type="file" name="file" required>
+        <button type="submit" class="btn">Upload</button>
+    </form>
+</div> -->
+{% endblock %}

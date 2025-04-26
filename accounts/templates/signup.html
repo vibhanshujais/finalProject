@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url("https://t4.ftcdn.net/jpg/05/67/81/77/360_F_567817739_TNHPxgiIhZPG8HQbJAALW5WBYdLHpaqT.jpg");
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+    }
+
+    form {
+      background-color: grey;
+      padding: 40px 40px;
+      margin-left: 50%;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      top:50%;
+      left: 50%;
+      
+      overflow: auto;
+      animation: slideUp 0.8s ease-in-out;
+    }
+
+    h2 {
+      text-align: center;
+      text-decoration: underline;
+      margin-bottom: 20px;
+      color: black;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 10px 15px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: 0.3s ease;
+      font-size: 14px;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="tel"]:focus,
+    select:focus {
+      border-color: #2575fc;
+      box-shadow: 0 0 8px rgba(37, 117, 252, 0.2);
+      outline: none;
+    }
+
+    input[type="submit"] {
+      background-color: #2575fc;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #1e5ec4;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: black;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+
+<div class="auth-container">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p class="message {{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <h2>SIGN-UP</h2>
+        <input type="text" name="username" placeholder="Username" value="{{ form_data.username|default_if_none:'' }}" required>
+        <input type="email" name="email" placeholder="Email" value="{{ form_data.email|default_if_none:'' }}" required>
+        <input type="tel" id="phone" name="phone" placeholder="Phone" value="{{ form_data.phone|default_if_none:'' }}" required aria-required="true">
+        <input type="password" name="password" id="password" placeholder="Password" oninput="checkPasswordStrength(this)" required>
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+    
+        <select name="user_type" required>
+          <option value="client" {% if form_data.user_type == 'client' %}selected{% endif %}">Client</option>
+          <option value="client" {% if form_data.user_type == 'client' %}selected{% endif %}>Lawyer</option>
+          <option value="client" {% if form_data.user_type == 'client' %}selected{% endif %}>Court</option>
+        </select>
+    
+        <input type="submit" value="Signup">
+    
+        <a href="{% url 'login' %}">Back to login</a>
+      </form>
+    <!-- <form method="POST" aria-labelledby="signup-form">
+        {% csrf_token %}
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Username" value="{{ form_data.username|default_if_none:'' }}" required aria-required="true">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Email" value="{{ form_data.email|default_if_none:'' }}"required aria-required="true">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Password" required aria-required="true" oninput="checkPasswordStrength(this)">
+        <div id="password-strength" style="color: #dc3545; font-size: 0.9rem;"></div>
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" placeholder="Phone" value="{{ form_data.phone|default_if_none:'' }}" required aria-required="true">
+        <label for="user_type">User Type</label>
+        <select id="user_type" name="user_type" required aria-required="true">
+            <option value="client" {% if form_data.user_type == 'client' %}selected{% endif %}>Client</option>
+            <option value="court" {% if form_data.user_type == 'court' %}selected{% endif %}>Court</option>
+            <option value="lawyer" {% if form_data.user_type == 'lawyer' %}selected{% endif %}>Lawyer</option>
+        </select>
+        <button type="submit" class="btn">Signup</button>
+    </form>
+    <p style="text-align: center; margin-top: 1rem;">
+        Already have an account? <a href="{% url 'login' %}">Log in</a>
+    </p> -->
+</div>
+{% endblock %}
